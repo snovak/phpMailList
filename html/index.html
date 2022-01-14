@@ -26,7 +26,9 @@
 
 
         function sendJSON() {
-
+            
+            let xhr = new XMLHttpRequest();
+            let url = "subscribe.php";
             let result = document.querySelector('#result');
             let name = document.querySelector('#name');
             let email = document.querySelector('#email');
@@ -73,8 +75,7 @@
             }
 
             // Creating a XHR object
-            let xhr = new XMLHttpRequest();
-            let url = "log.php";
+
 
             // open a connection
             xhr.open("POST", url, true);
