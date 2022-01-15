@@ -4,31 +4,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Test Document</title>
 </head>
 
 <body>
+    <a href="#" class="subscribeLink">Subscribe Link</a>
 
-    <div id="formWrapper">
+    <div id="formWrapper" class="hide">
         <div id="form">
+            <svg class="closeForm" width="94" height="94" viewBox="0 0 94 94" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="47" cy="47" r="47" fill="black"></circle>
+                <path d="M28.5 29.5L64.5 65.5" stroke="white" stroke-width="13" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                <path d="M64.5 29.5L28.5 65.5" stroke="white" stroke-width="13" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+
+            <h1>Thanks for downloading the Mimic Plugin!!</h1>
+            <p>Be the first to know about updates. We will NOT use your email for any other purpose.</p>
             <input type="text" placeholder="name" id="name"><br>
             <input type="text" placeholder="email" id="email"><br>
-            <input type="text" placeholder="2+2=" id="challenge">
+            <input type="text" placeholder="2+2=" id="challenge" size="4">
             <p id="result"></p>
-            <button id="send">Subscribe</button>
+            <button id="send">Subscribe</button> <button class="closeForm">No Thanks</button>
         </div>
     </div>
-    <a href="#">Test</a>
     <script>
         document.getElementById("send").onclick = () => {
             sendJSON()
         }
 
+        // document.select("closeForm").onclick = () => {
+        //     document.getElementById("formWrapper").classList.add("hide");
+        // }
+        document.querySelectorAll(".closeForm").forEach((el) => {
+            el.onclick = () => {
+                document.getElementById("formWrapper").classList.add("hide");
+            }
+        });
+
+        document.querySelectorAll(".subscribeLink").forEach((el) => {
+            el.onclick = () => {
+                console.log("clicked subscribeLink")
+                document.getElementById("formWrapper").classList.remove("hide");
+            }
+        });
+
 
         function sendJSON() {
-            
+
             let xhr = new XMLHttpRequest();
-            let url = "subscribe.php";
+            let url = "/subscribe.php";
             let result = document.querySelector('#result');
             let name = document.querySelector('#name');
             let email = document.querySelector('#email');
@@ -53,8 +80,8 @@
 
                         var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
 
-                        let emailValid =  String(email.value).search(filter) != -1;
-                        if(!emailValid){
+                        let emailValid = String(email.value).search(filter) != -1;
+                        if (!emailValid) {
                             result.innerHTML = "<span style='color:red'>Email invalid.</span>";
                             return false;
                         }
@@ -110,15 +137,28 @@
         }
     </script>
     <style>
-        html,
-        body {
-            background: #CCC;
-            width: 100%;
-            height: 100%;
+        svg.closeForm {
+            cursor: pointer;
+            width: 50px;
+            position: absolute;
+            top: -32px;
+            right: -17px;
+        }
+
+        input {
+
+            background: #FFF;
+            border: 1px solid #CCC;
+            border-radius: 10px;
+            margin: 6px;
+            padding: 6px;
         }
 
         #formWrapper {
-            position: absolute;
+            position: fixed;
+            top: 10px;
+            left: 0;
+            margin: 4px;
             width: 100%;
             height: 100%;
         }
@@ -128,11 +168,14 @@
             position: relative;
             margin: 30px;
             padding: 20px;
-
-
-            border-radius: 10px;
+            border-radius: 5px;
             background-color: #FFF;
+            border: 1px solid #000;
 
+        }
+
+        .hide {
+            display: none;
         }
     </style>
 </body>
